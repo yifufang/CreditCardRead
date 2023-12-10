@@ -1,5 +1,27 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/OoB-7GgR)
 
+### Project Description:
+You have a CSV file that contains credit card  records. Each record is on a line. It contains a field for the card number, the expiration date, and the name of the card holder. The fields are comma-separated.  In your system you have the following class structure for the credit cards:
+
+a class CreditCard,
+
+classes VisaCC, MasterCC, AmExCC that are all subclasses of CreditCard,
+
+you can assume more subclasses for other credit card types will be added later on.
+
+You now have to design the method(s) (and maybe additional classes) that  reads a record from the file, verifies that the credit card number is a valid account number, and creates an instance of the appropriate credit card class.  
+
+Important details: Credit card numbers cannot exceed 19.  You can determine the card issuer based on the credit card number:
+
+MasterCard
+
+First digit is a 5, second digit is in range 1 through 5 inclusive. Only valid length of number is 16 digits.
+
+Visa: First digit is a 4. Length is either 13 or 16 digits.
+
+AmericanExpress: First digit is a 3 and second digit a 4 or 7. Length is 15 digits.
+
+Discover: First four digits are 6011. Length is 16 digits.
 
 ### Requirement:
 
@@ -22,3 +44,5 @@ to run test, cd to root directory and run
 ```
     ./runTest.sh
 ```
+
+![diagram](./Diagrams/CreditCardDiagram.png)
