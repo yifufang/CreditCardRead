@@ -4,4 +4,8 @@ for file in lib/*.jar; do
 done
 
 javac -cp "$classpath" ./src/*.java -d ./out
-java -cp "$classpath;./out" Main
+
+echo "Start running"
+
+echo "Running input file: 1"
+java -cp "$classpath;./out" Main ./data/input_file.csv

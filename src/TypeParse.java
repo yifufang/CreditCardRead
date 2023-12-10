@@ -24,7 +24,7 @@ public class TypeParse {
     
     public void parseCSV(String inputFilePath) {
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath));
-             PrintWriter writer = new PrintWriter(new FileWriter("./data/output.csv"))) {
+             PrintWriter writer = new PrintWriter(new FileWriter("./output/output.csv"))) {
 
             String line;
             CardFactory factory = new ConcreateCardFactory();
@@ -47,7 +47,7 @@ public class TypeParse {
         
         CardFactory factory = new ConcreateCardFactory();
         JSONArray outputArray = new JSONArray();
-        try (PrintWriter writer = new PrintWriter(new FileWriter("./data/output.json"))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("./output/output.json"))) {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 CreditCard card = factory.createCard(jsonObject.getString("cardNumber"));
@@ -73,7 +73,7 @@ public class TypeParse {
 
             CardFactory factory = new ConcreateCardFactory();
             StringBuilder outputBuilder = new StringBuilder("<CARDS>");
-            try (PrintWriter writer = new PrintWriter(new FileWriter("./data/output.xml"))) {
+            try (PrintWriter writer = new PrintWriter(new FileWriter("./output/output.xml"))) {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject object = jsonArray.getJSONObject(i);
                     CreditCard card = factory.createCard(object.get("CARD_NUMBER").toString());
