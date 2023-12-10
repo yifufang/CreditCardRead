@@ -1,6 +1,7 @@
 public interface CreditCard {
     String getCardNumber();
     String getCardType();
+    CreditCard getNextHandler();
     CreditCard handleValidate();
     void setNextHandler(CreditCard next);
 }
@@ -52,6 +53,11 @@ class inValidCard implements CreditCard{
         return cardType;
     }
 
+    @Override
+    public CreditCard getNextHandler() {
+        return nextHandler;
+    }
+
 }
 
 class VisaCC implements CreditCard {
@@ -61,12 +67,12 @@ class VisaCC implements CreditCard {
 
     public VisaCC(String cardNumber) {
         this.cardNumber = cardNumber;
-        this.cardType = "Visa";
     }
 
     @Override
     public CreditCard handleValidate() {
         if (cardNumber.charAt(0) == '4' && (cardNumber.length() == 13 || cardNumber.length() == 16) ) {
+            this.cardType = "Visa";
             System.out.println(cardNumber + " Validated by Visa");
             return this;
         } else if (nextHandler != null) {
@@ -90,6 +96,10 @@ class VisaCC implements CreditCard {
     public String getCardType() {
         return cardType;
     }
+    @Override
+    public CreditCard getNextHandler() {
+        return nextHandler;
+    }
 }
 
 class MasterCard implements CreditCard {
@@ -99,12 +109,12 @@ class MasterCard implements CreditCard {
 
     public MasterCard(String cardNumber) {
         this.cardNumber = cardNumber;
-        this.cardType = "MasterCard";
     }
 
     @Override
     public CreditCard handleValidate() {
         if (cardNumber.charAt(0) == '5' && cardNumber.length() == 16 && (cardNumber.charAt(1) >= '1' && cardNumber.charAt(1) <= '5')) {
+            this.cardType = "MasterCard";
             System.out.println(cardNumber + " Validated by MasterCard");
             return this;
         } else if (nextHandler != null) {
@@ -127,6 +137,10 @@ class MasterCard implements CreditCard {
     public String getCardType() {
         return cardType;
     }
+    @Override
+    public CreditCard getNextHandler() {
+        return nextHandler;
+    }
 }
 
 class AmericanExpress implements CreditCard {
@@ -136,12 +150,12 @@ class AmericanExpress implements CreditCard {
 
     public AmericanExpress(String cardNumber) {
         this.cardNumber = cardNumber;
-        this.cardType = "AmericanExpress";
     }
 
     @Override
     public CreditCard handleValidate() {
         if (cardNumber.charAt(0) == '3' && cardNumber.length() == 15 && (cardNumber.charAt(1) == '4' || cardNumber.charAt(1) == '7')) {
+            this.cardType = "AmericanExpress";
             System.out.println(cardNumber + " Validated by American Express");
             return this;
         } else if (nextHandler != null) {
@@ -164,6 +178,10 @@ class AmericanExpress implements CreditCard {
     public String getCardType() {
         return cardType;
     }
+    @Override
+    public CreditCard getNextHandler() {
+        return nextHandler;
+    }
 }
 
 class Discover implements CreditCard {
@@ -173,12 +191,12 @@ class Discover implements CreditCard {
 
     public Discover(String cardNumber) {
         this.cardNumber = cardNumber;
-        this.cardType = "Discover";
     }
 
     @Override
     public CreditCard handleValidate() {
         if (cardNumber.substring(0,4).equals("6011") && cardNumber.length() == 16) {
+            this.cardType = "Discover";
             System.out.println(cardNumber + " Validated by Discover");
             return this;
         } else if (nextHandler != null) {
@@ -200,5 +218,9 @@ class Discover implements CreditCard {
     @Override
     public String getCardType() {
         return cardType;
+    }
+    @Override
+    public CreditCard getNextHandler() {
+        return nextHandler;
     }
 }
