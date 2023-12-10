@@ -10,24 +10,26 @@ import org.jdom.*;
 
 public class TypeParse {
 
-    public void parseFile(String inputFilePath){
+    public void parseFile(String inputFilePath, String outputFilePath){
         if (inputFilePath.endsWith(".csv")) {
-            parseCSV(inputFilePath);
+            parseCSV(inputFilePath, outputFilePath);
         } else if (inputFilePath.endsWith(".json")) {
-            parseJSON(inputFilePath);
+            parseJSON(inputFilePath, outputFilePath);
         } else if (inputFilePath.endsWith(".xml")) {
-            parseXML(inputFilePath);
+            parseXML(inputFilePath, outputFilePath);
         } else {
             System.out.println("Unsupported file type.");
         }
     }
     
-    public void parseCSV(String inputFilePath) {
+    public void parseCSV(String inputFilePath, String outputFilePath) {
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath));
-             PrintWriter writer = new PrintWriter(new FileWriter("./output/output.csv"))) {
+             PrintWriter writer = new PrintWriter(new FileWriter(outputFilePath))) {
 
             String line;
             CardFactory factory = new ConcreateCardFactory();
+            reader.readLine();
+            writer.println("CardNumber,CardType");
             while ((line = reader.readLine()) != null) {
                 String[] values = line.split(",");
                 CreditCard card = factory.createCard(values[0]);
@@ -40,14 +42,14 @@ public class TypeParse {
         }
     }
 
-    public void parseJSON(String inputFilePath) {
+    public void parseJSON(String inputFilePath, String outputFilePath) {
         try {
         String content = new String(Files.readAllBytes(Paths.get(inputFilePath)));
         JSONArray jsonArray = new JSONArray(content);
         
         CardFactory factory = new ConcreateCardFactory();
         JSONArray outputArray = new JSONArray();
-        try (PrintWriter writer = new PrintWriter(new FileWriter("./output/output.json"))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(outputFilePath))) {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 CreditCard card = factory.createCard(jsonObject.getString("cardNumber"));
@@ -65,7 +67,7 @@ public class TypeParse {
     }
     }
 
-    public void parseXML(String inputFilePath) {
+    public void parseXML(String inputFilePath, String outputFilePath) {
         try {
             String content = new String(Files.readAllBytes(Paths.get(inputFilePath)));
             JSONObject jsonObject = XML.toJSONObject(content);
@@ -73,7 +75,7 @@ public class TypeParse {
 
             CardFactory factory = new ConcreateCardFactory();
             StringBuilder outputBuilder = new StringBuilder("<CARDS>");
-            try (PrintWriter writer = new PrintWriter(new FileWriter("./output/output.xml"))) {
+            try (PrintWriter writer = new PrintWriter(new FileWriter(outputFilePath))) {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject object = jsonArray.getJSONObject(i);
                     CreditCard card = factory.createCard(object.get("CARD_NUMBER").toString());
@@ -84,7 +86,6 @@ public class TypeParse {
                 }
                 outputBuilder.append("</CARDS>");   
                 String xml = outputBuilder.toString();
-                writer.println(xml);
                 SAXBuilder builder = new SAXBuilder();
                 InputStream stream = new ByteArrayInputStream(xml.getBytes());
                 Document document = builder.build(stream);
