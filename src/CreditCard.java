@@ -67,10 +67,9 @@ class VisaCC implements CreditCard {
     @Override
     public CreditCard handleValidate() {
         if (cardNumber.charAt(0) == '4' && (cardNumber.length() == 13 || cardNumber.length() == 16) ) {
-            System.out.println("Validated by Visa");
+            System.out.println(cardNumber + " Validated by Visa");
             return this;
         } else if (nextHandler != null) {
-            System.out.println("Not validated by Visa");
             return nextHandler.handleValidate();
         } else{
             return null;
@@ -106,10 +105,9 @@ class MasterCard implements CreditCard {
     @Override
     public CreditCard handleValidate() {
         if (cardNumber.charAt(0) == '5' && cardNumber.length() == 16 && (cardNumber.charAt(1) >= '1' && cardNumber.charAt(1) <= '5')) {
-            System.out.println("Validated by MasterCard");
+            System.out.println(cardNumber + " Validated by MasterCard");
             return this;
         } else if (nextHandler != null) {
-            System.out.println("Not validated by MasterCard");
             return nextHandler.handleValidate();
         } else{
             return null;
@@ -144,10 +142,9 @@ class AmericanExpress implements CreditCard {
     @Override
     public CreditCard handleValidate() {
         if (cardNumber.charAt(0) == '3' && cardNumber.length() == 15 && (cardNumber.charAt(1) == '4' || cardNumber.charAt(1) == '7')) {
-            System.out.println("Validated by American Express");
+            System.out.println(cardNumber + " Validated by American Express");
             return this;
         } else if (nextHandler != null) {
-            System.out.println("Not validated by American Express");
             return nextHandler.handleValidate();
         } else{
             return null;
@@ -182,10 +179,9 @@ class Discover implements CreditCard {
     @Override
     public CreditCard handleValidate() {
         if (cardNumber.substring(0,4).equals("6011") && cardNumber.length() == 16) {
-            System.out.println("Validated by Discover");
+            System.out.println(cardNumber + " Validated by Discover");
             return this;
         } else if (nextHandler != null) {
-            System.out.println("Not validated by Discover");
             return nextHandler.handleValidate();
         } else{
             return null;
